@@ -274,8 +274,8 @@ textarea:focus-visible {
 .hero-photo {
   width: 100%;
   border-radius: 14px;
-  object-fit: cover;
-  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #fff8ef;
   border: 1px solid rgba(113, 54, 0, 0.12);
 }
 
@@ -375,8 +375,8 @@ textarea:focus-visible {
 .plan-image {
   width: 100%;
   border-radius: 12px;
-  object-fit: cover;
-  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #fff8ef;
   border: 1px solid rgba(113, 54, 0, 0.1);
 }
 

@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import {
   Heart,
   Menu,
-  Package,
   PawPrint,
   ShieldCheck,
   Sparkles,
@@ -16,20 +15,48 @@ const plans = [
     id: 'essencial',
     name: 'PetBox Essencial',
     price: 'R$ 49,90/mês',
-    description: 'Perfeito para começar a surpreender o seu pet todos os meses.',
+    description:
+      'A escolha ideal para começar a surpreender seu pet todos os meses com carinho, diversão e cuidado.',
+    image: '/images/petbox-essencial.png',
+    imageAlt: 'Imagem da PetBox Essencial aberta com produtos para pet',
+    products: [
+      '1 brinquedo surpresa para pet',
+      '1 pacote de petisco',
+      '1 item de cuidado básico',
+      '1 cartão temático do mês',
+    ],
   },
   {
     id: 'club',
     name: 'PetBox Club',
-    price: 'R$ 79,90/mês',
-    description: 'Nosso plano mais amado, com uma experiência completa de personalização.',
+    price: 'R$ 69,90/mês',
+    description:
+      'O plano mais escolhido para quem quer uma experiência mensal mais completa, divertida e personalizada.',
+    image: '/images/petbox-club.png',
+    imageAlt: 'Imagem da PetBox Club aberta com brinquedos, petiscos e itens de cuidado',
+    products: [
+      '3 brinquedos surpresa para pet',
+      '4 pacotes de petiscos',
+      '3 itens de cuidados básicos',
+      '1 cartão temático do mês para adestramento',
+    ],
     featured: true,
   },
   {
     id: 'premium',
     name: 'PetBox Premium',
-    price: 'R$ 109,90/mês',
-    description: 'Uma experiência ainda mais especial para quem quer oferecer mais carinho e exclusividade.',
+    price: 'R$ 89,90/mês',
+    description:
+      'Uma experiência especial para tutores que querem oferecer mais variedade, cuidado e surpresa para o pet.',
+    image: '/images/petbox-premium.png',
+    imageAlt: 'Imagem da PetBox Premium aberta com produtos premium para pet',
+    products: [
+      '4 brinquedos surpresa para pet',
+      '5 pacotes de petiscos selecionados',
+      '4 itens de cuidado e higiene',
+      '1 acessório especial',
+      '1 cartão temático premium do mês',
+    ],
   },
 ];
 
@@ -77,25 +104,28 @@ function App() {
   const suggestion = useMemo(() => {
     if (!submitted) return '';
 
-    let base = 'Itens adaptados ao perfil informado para proporcionar uma experiência especial.';
+    let base = 'Selecionamos itens adaptados para criar uma experiência especial para o seu pet.';
 
     if (form.petType === 'Cachorro') {
-      base = 'Brinquedo resistente, petisco sabor carne e item de cuidado especial para cães.';
+      base = 'Selecionamos brinquedos resistentes, petiscos saborosos e itens de cuidado pensados para cães.';
     }
 
     if (form.petType === 'Gato') {
-      base = 'Brinquedo interativo, petisco sabor peixe e item de cuidado especial para gatos.';
+      base = 'Selecionamos brinquedos interativos, petiscos especiais e itens de cuidado pensados para gatos.';
     }
 
     const extras = [];
+
     if (form.petAge === 'Filhote') {
-      extras.push('Itens selecionados para acompanhar a fase de crescimento com mais conforto e diversão.');
+      extras.push('Incluímos uma seleção mais leve e adequada para pets em fase de crescimento.');
     }
+
     if (form.petAge === 'Idoso') {
-      extras.push('Itens pensados para uma rotina mais tranquila, confortável e cheia de carinho.');
+      extras.push('Incluímos itens pensados para conforto, cuidado e uma rotina mais tranquila.');
     }
+
     if (form.petSize === 'Grande') {
-      extras.push('Selecionamos uma composição compatível com pets de porte maior.');
+      extras.push('Os itens foram pensados em tamanhos maiores para acompanhar o porte do seu pet.');
     }
 
     return [base, ...extras].join(' ');
@@ -136,6 +166,7 @@ function App() {
         >
           {menuOpen ? <X /> : <Menu />}
         </button>
+
         <nav className={menuOpen ? 'nav open' : 'nav'}>
           <a href="#inicio" onClick={() => setMenuOpen(false)}>Início</a>
           <a href="#como-funciona" onClick={() => setMenuOpen(false)}>Como funciona</a>
@@ -154,30 +185,36 @@ function App() {
 
         <div className="hero-copy">
           <span className="eyebrow">Assinatura mensal para pets</span>
-          <h1>Todo mês, uma surpresa especial para o seu pet.</h1>
+          <h1>Todo mês, uma box especial para o seu pet.</h1>
           <p>
-            Brinquedos, petiscos e itens especiais escolhidos para combinar com o estilo,
-            porte e fase da vida do seu melhor amigo.
+            Brinquedos, petiscos e cuidados selecionados para cães e gatos,
+            com uma experiência pensada para cada perfil.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#planos">Ver planos</a>
             <button className="secondary-button" type="button" onClick={() => openPlan(plans[1])}>
-              Personalizar minha box
+              Montar minha box
             </button>
           </div>
           <div className="quick-tags">
             <span>Entrega mensal</span>
-            <span>Seleção premium</span>
+            <span>Curadoria especial</span>
             <span>Para cães e gatos</span>
-            <span>Personalização por pet</span>
+            <span>Personalização por perfil</span>
           </div>
         </div>
 
-        <div className="hero-card" aria-label="Resumo da box do mês">
-          <div className="box-lid"><Sparkles /></div>
-          <Package className="box-icon" size={88} />
-          <h2>PetBox do mês</h2>
-          <p>1 brinquedo + 1 petisco + 1 item de cuidado + 1 cartão temático.</p>
+        <div className="hero-card" aria-label="Resumo da experiência PetBox Club">
+          <img
+            src="/images/petbox-club.png"
+            alt="PetBox Club com brinquedos, petiscos e itens de cuidado"
+            className="hero-photo"
+          />
+          <h2>Carinho em cada detalhe</h2>
+          <p>
+            Boxes com produtos selecionados, carinho em cada detalhe e personalização
+            de acordo com o perfil do seu pet.
+          </p>
           <div className="floating-paw"><PawPrint /></div>
         </div>
       </section>
@@ -194,17 +231,17 @@ function App() {
           <article>
             <Star />
             <h3>Escolha um plano</h3>
-            <p>Selecione a opção ideal para o momento do seu pet.</p>
+            <p>Cada plano possui uma composição própria de produtos.</p>
           </article>
           <article>
             <PawPrint />
             <h3>Conte sobre o seu pet</h3>
-            <p>Preencha o perfil para uma curadoria mais certeira.</p>
+            <p>Preencha o perfil para personalizar sua próxima PetBox.</p>
           </article>
           <article>
-            <Package />
+            <Truck />
             <h3>Receba em casa</h3>
-            <p>Todo mês, uma seleção pensada para surpreender com carinho.</p>
+            <p>Todo mês, uma seleção criada para surpreender com conforto e diversão.</p>
           </article>
         </div>
       </section>
@@ -213,16 +250,26 @@ function App() {
         <div className="section-heading">
           <span className="eyebrow">Planos</span>
           <h2>Escolha o plano que combina com você e seu pet.</h2>
-          <p>Todos os planos incluem o nosso kit base e curadoria personalizada.</p>
+          <p>
+            Cada plano possui uma composição própria de produtos,
+            e a personalização acontece depois que você preenche o perfil do pet.
+          </p>
         </div>
 
         <div className="plans-grid">
           {plans.map((plan) => (
             <article key={plan.id} className={plan.featured ? 'plan-card featured' : 'plan-card'}>
+              <img src={plan.image} alt={plan.imageAlt} className="plan-image" loading="lazy" />
               {plan.featured && <span className="badge">Mais escolhido</span>}
               <h3>{plan.name}</h3>
               <strong className="price">{plan.price}</strong>
               <p>{plan.description}</p>
+              <h4>Produtos incluídos</h4>
+              <ul className="plan-products">
+                {plan.products.map((product) => (
+                  <li key={product}>{product}</li>
+                ))}
+              </ul>
               <button type="button" onClick={() => openPlan(plan)}>Personalizar minha box</button>
             </article>
           ))}
@@ -233,64 +280,58 @@ function App() {
         <PawTrail className="trail-benefits" />
 
         <div className="section-heading">
-          <span className="eyebrow">Benefícios e confiança</span>
-          <h2>Compromisso com qualidade, cuidado e experiência.</h2>
+          <span className="eyebrow">Confiança em cada detalhe</span>
+          <h2>Atendimento próximo, cuidado com dados e experiências personalizadas.</h2>
         </div>
 
         <div className="trust-grid">
           <article>
-            <ShieldCheck />
-            <h3>Privacidade em primeiro lugar</h3>
-            <p>
-              As informações do seu cadastro são tratadas com segurança para entregar uma experiência
-              personalizada e protegida em cada etapa.
-            </p>
-          </article>
-
-          <article>
-            <img src="/ra1000.png" alt="Selo RA1000" className="ra-image" />
-            <h3>Referência em atendimento</h3>
-            <p>
-              Inspirados por altos padrões de atendimento e confiança para oferecer uma jornada ainda mais especial.
-            </p>
-          </article>
-
-          <article>
-            <Truck />
-            <h3>Entrega mensal e curadoria especial</h3>
-            <p>
-              Uma seleção feita com carinho para transformar a rotina do seu pet com novidades todos os meses.
-            </p>
-          </article>
-
-          <article>
             <Heart />
-            <h3>Carinho em cada detalhe</h3>
+            <h3>Atendimento próximo</h3>
+            <p>Suporte acolhedor para ajudar na escolha do plano ideal para o seu pet.</p>
+          </article>
+
+          <article>
+            <ShieldCheck />
+            <h3>Dados protegidos</h3>
             <p>
-              Cada box é pensada para criar momentos de conexão e alegria entre você e seu melhor amigo.
+              Seus dados são usados apenas para contato e personalização da experiência PetBox Club,
+              com cuidado, segurança e respeito à sua privacidade.
             </p>
+          </article>
+
+          <article>
+            <img src="/ra1000.png" alt="Selo de referência em reputação e atendimento" className="ra-image" />
+            <h3>Reputação e cuidado com o cliente</h3>
+            <p>Buscamos sempre altos padrões de atendimento para oferecer confiança em toda a jornada.</p>
+          </article>
+
+          <article>
+            <Sparkles />
+            <h3>Experiência personalizada</h3>
+            <p>Cada box é preparada para combinar com o perfil e a rotina do seu melhor amigo.</p>
           </article>
         </div>
       </section>
 
       <section className="section testimonials-section">
         <div className="section-heading">
-          <span className="eyebrow">Clientes felizes</span>
-          <h2>O que dizem sobre a experiência PetBox Club</h2>
+          <span className="eyebrow">Quem já recebeu uma PetBox adorou</span>
+          <h2>Histórias de tutores e pets felizes</h2>
         </div>
 
         <div className="testimonials-grid">
           <article>
-            <p>“Meu cão ficou animado com os brinquedos e os petiscos chegaram certinhos para o porte dele.”</p>
-            <strong>Mariana e Thor</strong>
-          </article>
-          <article>
-            <p>“A personalização faz toda diferença. Minha gata adorou a combinação da última box.”</p>
+            <p>“A Luna ficou animada assim que viu a caixa. Foi uma experiência muito divertida!”</p>
             <strong>Rafaela e Luna</strong>
           </article>
           <article>
-            <p>“Visual lindo, atendimento rápido e uma experiência muito carinhosa desde a primeira entrega.”</p>
-            <strong>João e Max</strong>
+            <p>“Gostei da praticidade de receber tudo selecionado para o Thor.”</p>
+            <strong>Mariana e Thor</strong>
+          </article>
+          <article>
+            <p>“A personalização deixou a box com muito mais sentido para a rotina do meu gato.”</p>
+            <strong>João e Mingau</strong>
           </article>
         </div>
       </section>
@@ -298,12 +339,12 @@ function App() {
       <section id="contato" className="section contact-section">
         <div>
           <span className="eyebrow">Contato</span>
-          <h2>Fale com a equipe PetBox Club</h2>
-          <p>Estamos prontos para ajudar você a encontrar o melhor plano para o seu pet.</p>
+          <h2>Fale com a PetBox Club</h2>
+          <p>Nossa equipe está pronta para ajudar você a encontrar o melhor plano para o seu pet.</p>
           <div className="contact-info">
             <strong>contato@petboxclub.com.br</strong>
             <strong>(44) 99999-9999</strong>
-            <span>Atendimento: segunda a sexta, das 9h às 18h</span>
+            <span>Segunda a sexta, das 9h às 18h</span>
           </div>
         </div>
 
@@ -336,7 +377,7 @@ function App() {
             <textarea required placeholder="Como podemos ajudar?" />
           </label>
           <button type="submit">Enviar mensagem</button>
-          {contactSent && <p className="success-message">Mensagem enviada com sucesso! Nossa equipe retornará em breve.</p>}
+          {contactSent && <p className="success-message">Mensagem enviada com sucesso! Em breve entraremos em contato.</p>}
         </form>
       </section>
 
@@ -345,9 +386,11 @@ function App() {
         <p>© 2026 PetBox Club. Todos os direitos reservados.</p>
         <div>
           <a href="#inicio">Início</a>
+          <a href="#como-funciona">Como funciona</a>
           <a href="#planos">Planos</a>
           <a href="#beneficios">Benefícios</a>
           <a href="#contato">Contato</a>
+          <a href="#beneficios">Política de Privacidade</a>
         </div>
       </footer>
 
@@ -362,9 +405,7 @@ function App() {
               <>
                 <span className="eyebrow">{selectedPlan.name}</span>
                 <h2 id="modal-title">Personalize a box do seu pet</h2>
-                <p>
-                  Responda os campos abaixo para criarmos uma sugestão personalizada para o perfil do seu melhor amigo.
-                </p>
+                <p>Conte um pouco sobre o seu pet para prepararmos uma experiência combinando com o perfil dele.</p>
 
                 <form className="pet-form" onSubmit={submitPetForm}>
                   <label>
@@ -389,7 +430,7 @@ function App() {
                     </select>
                   </label>
                   <label>
-                    Idade do pet
+                    Idade
                     <select name="petAge" value={form.petAge} onChange={updateField} required>
                       <option value="" disabled>Selecione</option>
                       <option>Filhote</option>
@@ -398,7 +439,7 @@ function App() {
                     </select>
                   </label>
                   <label>
-                    Porte do animal
+                    Porte
                     <select name="petSize" value={form.petSize} onChange={updateField} required>
                       <option value="" disabled>Selecione</option>
                       <option>Pequeno</option>
@@ -417,18 +458,20 @@ function App() {
                     />
                   </label>
 
-                  <button type="submit">Ver minha box personalizada</button>
+                  <button type="submit">Montar minha PetBox</button>
                 </form>
               </>
             ) : (
               <div className="result-card">
                 <Sparkles />
-                <h2>Pronto! A box do(a) {form.petName} foi personalizada com base nas informações preenchidas.</h2>
+                <h2>Pronto! A PetBox do(a) {form.petName} foi personalizada com base no perfil informado.</h2>
                 <dl>
                   <div><dt>Plano escolhido</dt><dd>{selectedPlan.name}</dd></div>
+                  <div><dt>Nome do pet</dt><dd>{form.petName}</dd></div>
                   <div><dt>Tipo</dt><dd>{form.petType}</dd></div>
                   <div><dt>Idade</dt><dd>{form.petAge}</dd></div>
                   <div><dt>Porte</dt><dd>{form.petSize}</dd></div>
+                  <div><dt>Preferências</dt><dd>{form.notes}</dd></div>
                 </dl>
                 <p><strong>Sugestão da box:</strong> {suggestion}</p>
                 <button type="button" onClick={closeModal}>Finalizar</button>

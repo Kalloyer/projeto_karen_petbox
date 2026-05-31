@@ -39,6 +39,14 @@ As imagens de planos estão em:
 - `public/images/petbox-club.png`
 - `public/images/petbox-premium.png`
 
+Versões otimizadas WebP com fallback:
+
+- `public/images/petbox-essencial.webp` + fallback `.png`
+- `public/images/petbox-club.webp` + fallback `.png`
+- `public/images/petbox-premium.webp` + fallback `.png`
+
+Os cards usam `<picture>` com `loading="lazy"` e `decoding="async"`.
+
 ## Formulário de personalização
 
 Todos os CTAs dos planos abrem o modal com:
@@ -52,6 +60,19 @@ Todos os CTAs dos planos abrem o modal com:
 - preferências
 
 Após o envio, o usuário recebe uma prévia personalizada com base no perfil informado.
+
+Quando o tipo de pet é **Outro**, o formulário exibe o campo condicional **Qual é o animal?**,
+que se torna obrigatório e alimenta o resultado da personalização.
+
+## LGPD e confiança
+
+Na seção de benefícios, o card **Dados protegidos pela LGPD** explica o uso de dados
+com foco em segurança, transparência e privacidade, com link externo para referência da lei.
+
+## Assinatura visual
+
+Patinhas decorativas aparecem ao longo das seções como elemento de identidade da marca,
+com opacidade reduzida para não prejudicar legibilidade.
 
 ## Caveman e AGENTS
 

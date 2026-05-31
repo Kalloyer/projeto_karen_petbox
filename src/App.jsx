@@ -244,6 +244,32 @@ function App() {
         </div>
       </section>
 
+      <section id="momento-petbox" className="section video-section">
+        <PawTrail className="trail-video-left" />
+        <PawTrail className="trail-video-right" />
+
+        <div className="section-heading">
+          <span className="eyebrow">Momento PetBox</span>
+          <h2>Veja a alegria de abrir a box junto com o seu melhor amigo.</h2>
+          <p>
+            Um momento real de carinho, surpresa e diversão para tutores e pets.
+          </p>
+        </div>
+
+        <div className="video-card">
+          <video
+            className="unboxing-video"
+            controls
+            playsInline
+            preload="metadata"
+            poster="/images/petbox-club.png"
+          >
+            <source src="/videos/petbox-unboxing.mp4" type="video/mp4" />
+            Seu navegador não suporta reprodução de vídeo.
+          </video>
+        </div>
+      </section>
+
       <section id="como-funciona" className="section">
         <PawTrail className="trail-between" />
         <PawTrail className="trail-how-left" />

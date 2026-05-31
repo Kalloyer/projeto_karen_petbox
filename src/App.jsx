@@ -65,6 +65,7 @@ const initialForm = {
   email: '',
   petName: '',
   petType: '',
+  otherPetType: '',
   petAge: '',
   petSize: '',
   notes: '',
@@ -104,6 +105,7 @@ function App() {
   const suggestion = useMemo(() => {
     if (!submitted) return '';
 
+    const otherAnimal = form.otherPetType?.trim();
     let base = 'Selecionamos itens adaptados para criar uma experiência especial para o seu pet.';
 
     if (form.petType === 'Cachorro') {
@@ -112,6 +114,11 @@ function App() {
 
     if (form.petType === 'Gato') {
       base = 'Selecionamos brinquedos interativos, petiscos especiais e itens de cuidado pensados para gatos.';
+    }
+    if (form.petType === 'Outro') {
+      base = otherAnimal
+        ? `Selecionamos itens adaptados para criar uma experiência especial para o seu ${otherAnimal.toLowerCase()}.`
+        : 'Selecionamos itens adaptados para criar uma experiência especial para o seu pet.';
     }
 
     const extras = [];
@@ -145,7 +152,18 @@ function App() {
 
   function updateField(event) {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+
+    setForm((current) => {
+      if (name === 'petType' && value !== 'Outro') {
+        return {
+          ...current,
+          petType: value,
+          otherPetType: '',
+        };
+      }
+
+      return { ...current, [name]: value };
+    });
   }
 
   function submitPetForm(event) {
@@ -182,6 +200,8 @@ function App() {
       <section id="inicio" className="hero section">
         <PawTrail className="trail-hero-left" />
         <PawTrail className="trail-hero-right" />
+        <PawTrail className="trail-hero-side-left" />
+        <PawTrail className="trail-hero-divider" />
 
         <div className="hero-copy">
           <span className="eyebrow">Assinatura mensal para pets</span>
@@ -198,18 +218,23 @@ function App() {
           </div>
           <div className="quick-tags">
             <span>Entrega mensal</span>
-            <span>Curadoria especial</span>
+            <span>Surpresa todo mês</span>
             <span>Para cães e gatos</span>
             <span>Personalização por perfil</span>
           </div>
         </div>
 
         <div className="hero-card" aria-label="Resumo da experiência PetBox Club">
-          <img
-            src="/images/petbox-club.png"
-            alt="PetBox Club com brinquedos, petiscos e itens de cuidado"
-            className="hero-photo"
-          />
+          <picture>
+            <source srcSet="/images/petbox-club.webp" type="image/webp" />
+            <img
+              src="/images/petbox-club.png"
+              alt="PetBox Club com brinquedos, petiscos e itens de cuidado"
+              className="hero-photo"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <h2>Carinho em cada detalhe</h2>
           <p>
             Boxes com produtos selecionados, carinho em cada detalhe e personalização
@@ -221,6 +246,8 @@ function App() {
 
       <section id="como-funciona" className="section">
         <PawTrail className="trail-between" />
+        <PawTrail className="trail-how-left" />
+        <PawTrail className="trail-how-right" />
 
         <div className="section-heading">
           <span className="eyebrow">Como funciona</span>
@@ -247,6 +274,9 @@ function App() {
       </section>
 
       <section id="planos" className="section plans-section">
+        <PawTrail className="trail-planos-top" />
+        <PawTrail className="trail-planos-left" />
+        <PawTrail className="trail-planos-right" />
         <div className="section-heading">
           <span className="eyebrow">Planos</span>
           <h2>Escolha o plano que combina com você e seu pet.</h2>
@@ -259,7 +289,10 @@ function App() {
         <div className="plans-grid">
           {plans.map((plan) => (
             <article key={plan.id} className={plan.featured ? 'plan-card featured' : 'plan-card'}>
-              <img src={plan.image} alt={plan.imageAlt} className="plan-image" loading="lazy" />
+              <picture>
+                <source srcSet={plan.image.replace('.png', '.webp')} type="image/webp" />
+                <img src={plan.image} alt={plan.imageAlt} className="plan-image" loading="lazy" decoding="async" />
+              </picture>
               {plan.featured && <span className="badge">Mais escolhido</span>}
               <h3>{plan.name}</h3>
               <strong className="price">{plan.price}</strong>
@@ -278,6 +311,7 @@ function App() {
 
       <section id="beneficios" className="section benefits-section">
         <PawTrail className="trail-benefits" />
+        <PawTrail className="trail-benefits-right" />
 
         <div className="section-heading">
           <span className="eyebrow">Confiança em cada detalhe</span>
@@ -293,11 +327,20 @@ function App() {
 
           <article>
             <ShieldCheck />
-            <h3>Dados protegidos</h3>
+            <h3>Dados protegidos pela LGPD</h3>
             <p>
               Seus dados são usados apenas para contato e personalização da experiência PetBox Club,
-              com cuidado, segurança e respeito à sua privacidade.
+              seguindo princípios da LGPD para coleta, uso, armazenamento e proteção de dados pessoais
+              com segurança, transparência e respeito à sua privacidade.
             </p>
+            <a
+              href="https://lgpd.ufcg.edu.br/index.php/o-que-e-a-lgpd-a#:~:text=A%20Lei%20Geral%20de%20Prote%C3%A7%C3%A3o%20de%20Dados%20(LGPD)%20do%20Governo,em%20%C3%B3rg%C3%A3os%20e%20servi%C3%A7os%20p%C3%BAblicos."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="lgpd-link"
+            >
+              Saiba mais sobre a LGPD
+            </a>
           </article>
 
           <article>
@@ -315,6 +358,8 @@ function App() {
       </section>
 
       <section className="section testimonials-section">
+        <PawTrail className="trail-testimonials-left" />
+        <PawTrail className="trail-testimonials-right" />
         <div className="section-heading">
           <span className="eyebrow">Quem já recebeu uma PetBox adorou</span>
           <h2>Histórias de tutores e pets felizes</h2>
@@ -337,6 +382,8 @@ function App() {
       </section>
 
       <section id="contato" className="section contact-section">
+        <PawTrail className="trail-contact-left" />
+        <PawTrail className="trail-contact-right" />
         <div>
           <span className="eyebrow">Contato</span>
           <h2>Fale com a PetBox Club</h2>
@@ -382,6 +429,8 @@ function App() {
       </section>
 
       <footer className="footer">
+        <PawTrail className="trail-footer-left" />
+        <PawTrail className="trail-footer-right" />
         <Logo compact />
         <p>© 2026 PetBox Club. Todos os direitos reservados.</p>
         <div>
@@ -429,6 +478,18 @@ function App() {
                       <option>Outro</option>
                     </select>
                   </label>
+                  {form.petType === 'Outro' && (
+                    <label>
+                      Qual é o animal?
+                      <input
+                        name="otherPetType"
+                        value={form.otherPetType}
+                        onChange={updateField}
+                        required
+                        placeholder="Exemplo: coelho, hamster, pássaro..."
+                      />
+                    </label>
+                  )}
                   <label>
                     Idade
                     <select name="petAge" value={form.petAge} onChange={updateField} required>
@@ -469,6 +530,9 @@ function App() {
                   <div><dt>Plano escolhido</dt><dd>{selectedPlan.name}</dd></div>
                   <div><dt>Nome do pet</dt><dd>{form.petName}</dd></div>
                   <div><dt>Tipo</dt><dd>{form.petType}</dd></div>
+                  {form.petType === 'Outro' && form.otherPetType.trim() && (
+                    <div><dt>Animal</dt><dd>{form.otherPetType}</dd></div>
+                  )}
                   <div><dt>Idade</dt><dd>{form.petAge}</dd></div>
                   <div><dt>Porte</dt><dd>{form.petSize}</dd></div>
                   <div><dt>Preferências</dt><dd>{form.notes}</dd></div>
